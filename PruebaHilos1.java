@@ -1,4 +1,5 @@
 
+//Clase extendida de Thread
 class miHilo extends Thread{
 	@Override
 	public void run(){
@@ -9,7 +10,7 @@ class miHilo extends Thread{
 	}
 }
 
-public class HelloWorld {
+public class PruebaHilos1{
     public static void main(String[] args) {
     	System.out.print("Hola de nuevo mundo \n");
     	miHilo H = new miHilo();    
