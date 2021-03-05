@@ -1,13 +1,24 @@
 //Clase extendida de Thread
 class miHilo extends Thread{
-	public int suma;
+	int suma;
+	int intervalo;
+	int tam; 
+
+	//Metodo de construcción
+	public miHilo(int intervalo, int tam){
+		suma = 0;
+		this.intervalo = intervalo;
+		this.tam = tam; 
+	}
 
 	@Override
 	public void run(){
-		sumaPrimeros sp = new sumaPrimeros();
-		suma = sp.sumar(10,4);
-		System.out.println("Suma Thread: "+suma);
-		this.setSum(suma);
+		int limDerecho = intervalo+tam;
+		int sumaIntervalo = 0;
+		for (int i = intervalo; i<limDerecho; i++) {
+			sumaIntervalo += i;
+		}
+		this.setSum(sumaIntervalo);
 	}
 
 	public void setSum(int s){
@@ -42,7 +53,7 @@ public class sumParalela{
     public static void main(String[] args) {
     	System.out.print("Inicio de hilo principal\n");
     	//Se crea hilo
-    	miHilo H = new miHilo();    
+    	miHilo H = new miHilo(1,5);    
     	H.start();
     	/* Es tan rápido el acceso al atributo del objeto 
     	* que se debe detener el hilo principal uno segundo
