@@ -1,0 +1,5 @@
+ 51  67  19  43  57  48  84  45  83  74  89  98  78  97  24 
+----------------------------------
+>>Busqueda Paralela 
+ Número de hilos es: 15 y buscamos 7 
+El elemento se encuentra en la posición 1 
