@@ -14,6 +14,9 @@ int main(int argc, char const *argv[])
 		puts("Error en la operación de apertura");
 		return -1;
 	}
+	/* Cuenta cuantas lineas tiene el documento	
+	*/
+	
 	//mientras no se llegue al fin del documento
 	while ((c=getc(pf))!=EOF){ 
 		if(c=='\n'){

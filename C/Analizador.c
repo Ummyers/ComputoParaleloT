@@ -20,6 +20,7 @@ struct pal{
 // strlne:: longitud de una cadena 
 // strcat:: Concatena la cadena 1 con la cadena 2
 // strcmp:: Para saber si dos cadenas son iguales 
+
 int main(int argc, char const *argv[])
 {
 	struct pal palabra = {"cadena",1};
