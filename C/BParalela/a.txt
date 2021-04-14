@@ -1,5 +1,0 @@
- 57  70  15  60  42  52  65  17  58  38 
-----------------------------------
->>Busqueda Paralela 
- Número de hilos es: 10 y buscamos 7 
-El elemento se encuentra en la posición 1 
