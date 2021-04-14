@@ -1,78 +1,70 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-FILE *ff;
-char* arch = "Texto.txt";  
+int indice = 0;
+int numWord = 0;
+int c;
 
 struct word{
 	char pal[20]; 
 	int veces;
 };
 
-int main(int argc, char const *argv[])
-{
-	int c, n=0;
-    // int n = 0;
-    // char c;
-	int i, index;
-	FILE *pf; //Puntero para el archivo
-    FILE *pf2;
+FILE *pf2;
+struct word *texto;
 
-	char *nombre = "Texto.txt";
+/* @brief Cuantas palabras tendrá
+*
+*/
 
-	if((pf = fopen(nombre, "rt"))== NULL){
-		puts("Error en la operación de apertura");
-		return -1;
-	}
-
-    if ((pf2 = fopen(nombre, "rt")) == NULL)
-    {
-        puts("Error en la operación de apertura");
-        return -1;
-    }
-    //Aproximamos cuantas palabras tendrá
-    int numWord = 0; 
-	while ((c=getc(pf2))!=EOF){
-        if ((c == ' ') || (c == ',') || (c == '.'))
-        {
+void numWords(){
+    while ((c = getc(pf2)) != EOF){
+        if ((c == ' ') || (c == ',') || (c == '.')){
             numWord++;
         }
     }
+}
+/* @brief Imprime todas las palabras
+*
+*/
+void imprimirTexto(){
+    for (int k = 0; k <= numWord; k++){
+        printf("Word %d: %s \n", k, texto[k].pal);
+    }
+}
 
-    //printf("El número de palabras aproximado es: %d", numPalabras);
+int main(int argc, char const *argv[])
+{
+	FILE *pf; //Puntero para el archivo
 
-	
-	// struct word texto[200];
-    struct word *texto; 
-    texto = (struct word*)malloc(numWord*sizeof(struct word));
-	
-	index = 0;
-	int j = 0;
+	char *nombre = "Texto.txt";
 
-	i = 0;
+    //Verifica que los apuntadores se inicien de forma correcta
+    if (((pf = fopen(nombre, "rt")) == NULL) || ((pf2 = fopen(nombre, "rt")) == NULL))
+    {
+        puts("Error en la operación de apertura");
+		return -1;
+    }
+    numWords();
+
+    texto = (struct word *)malloc(numWord * sizeof(struct word));
+
+    int j = 0;
+    int i = 0;
+
 	while ((c=getc(pf))!=EOF){ 
         //Quita comas y puntos
-        // printf("Caracter leido %c \n",c);
 		if((c==' ')||(c==',')||(c=='.')){
-            // printf("Se leyó un espacio, como o caracter \n");
-            index++;
+            indice++;
             i = 0;
-            //Verifica que no es el fin de archivo
-            // if((c=getc(pf)) == EOF)
-                // break; 
         }
-        texto[index].pal[i] = c;
-        texto[index].veces = 1;
+        texto[indice].pal[i] = c;
+        texto[indice].veces = 1;
         i++;
 	}
-    
-    for (int k = 0; k <= numWord; k++)
-    {
-        if(texto[k].veces == 0)
-            break; 
-        printf("Index %d Palabra: %s \n", k, texto[k].pal);
-    }
+    imprimirTexto();
 
+    free(texto);
     fclose(pf);
 	return 0;
 }
