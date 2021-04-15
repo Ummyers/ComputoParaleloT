@@ -3,7 +3,7 @@
 
 int indice = 0;
 int numWord = 0;
-int c;
+char c;
 
 struct word{
 	char pal[20]; 
@@ -24,6 +24,7 @@ void numWords(){
         }
     }
 }
+
 /* @brief Imprime todas las palabras
 *
 */
@@ -62,9 +63,11 @@ int main(int argc, char const *argv[])
         texto[indice].veces = 1;
         i++;
 	}
+
     imprimirTexto();
 
     free(texto);
     fclose(pf);
+    fclose(pf2);
 	return 0;
 }
