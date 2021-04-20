@@ -12,7 +12,7 @@ struct word{
 int main(int argc, char const *argv[])
 {
 	int c, n=0;
-	int i, index;
+	int i, indice;
 	FILE *pf; //Puntero para el archivo
 	char *nombre = "Texto.txt";
 
@@ -23,14 +23,14 @@ int main(int argc, char const *argv[])
 	
 	struct word texto[100];
 	
-	index = 0;
+	indice = 0;
 	int j = 0;
 
 	while ((c=getc(pf))!=EOF){ 
 	i = 0;
 		do{
-			texto[index].pal[i] = c;
-			texto[index].veces = 1;  
+			texto[indice].pal[i] = c;
+			texto[indice].veces = 1;  
 			i++;
 		}while((c=getc(pf))!=' ');
 
@@ -38,7 +38,6 @@ int main(int argc, char const *argv[])
 	// 	j++;
 	// 	index++;
 	}
-
 	fclose(pf);
 	return 0;
 }

@@ -2,7 +2,6 @@
 * Abril, 2021
 * Muñiz Patiño, Andrea
 */
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -10,15 +9,17 @@ int indice = 0;
 
 //Tentativo numero de palabras del texto
 int numWord = 0;
+//Número de símbolos que tiene el patrón
 int tamPatron = 0; 
+//Número de símbolos que tiene el texto
+int numSimbolos = 0;
 char t; //para el texto
 char p; //para el patron
-int tamPatronL;
     
 //Guardamos el texto
 char *texto;
 //Guardamos el patron
-char* patron;
+char *patron;
 
 FILE *pf; //Puntero para el texto
 FILE *pfp; //Puntero para el patron
@@ -26,10 +27,10 @@ FILE *pfp; //Puntero para el patron
 /* @brief imprime el patron a buscar
 */
 void imprimirPatron(){
-    tamPatronL = ((sizeof(patron)) / 2) + 1;
-    // printf("El patron tiene tam: %d \n",tamPatronL);
-    for (int k = 0; k < tamPatronL; k++)
-    {
+
+    printf("El patron tiene tam: %d \n",tamPatron);
+
+    for (int k = 0; k < tamPatron; k++){
         printf(" %c ", *(patron + k));
     }
     printf("\n");
@@ -39,16 +40,39 @@ void imprimirPatron(){
 * 
 */
 void preText(){
+    //Pre-procesa el texto
+
+    //Determina el número de palabras
     while ((t = getc(pf)) != EOF)
     {
         if ((t == ' ') || (t == ',') || (t == '.'))
             numWord++;
     }
+
+    int numSim = fseek(pf, 0, SEEK_SET);
+    //Contabiliza el número de símbolos del texto
+    while ((t = getc(pf)) != EOF)
+    {
+        if (!((t == ',') || (t == '.')))
+            numSimbolos++;
+    }
+
+    //Pre-procesa el patron
     while ((p = getc(pfp)) != EOF)
     {
         tamPatron++;
     }
-    printf("numWord: %d, tamPatron: %d \n", numWord, tamPatron);
+    printf("numWord: %d, tamPatron: %d, numSimbolos: %d \n", numWord, tamPatron, numSimbolos);
+}
+
+void extraerPatron(){
+    //Se obtiene el patro del archivo se guarda en "patron"
+    int i = 0;
+    while ((p = getc(pfp)) != EOF)
+    {
+        *(patron + i) = p;
+        i++;
+    }
 }
 
 
@@ -64,29 +88,65 @@ int main(int argc, char const *argv[])
         puts("Error en la operación de apertura");
 		return -1;
     }
+
     //Para utilizar la memoria suficiente y necesaria
     preText();
 
-    texto = (char*)malloc(numWord* sizeof(char));
+    texto = (char*)malloc(numSimbolos* sizeof(char));
     patron = (char*)malloc(tamPatron* sizeof(char));
 
     // Colocamos el puntero al inicio del archivo
     int inicio = fseek(pfp,0,SEEK_SET);
     //el puntero pfp se mueve cero posiciones desde el incio.
 
+    // extraerPatron();
     int i = 0;
     while ((p = getc(pfp)) != EOF)
     {
         *(patron + i) = p;
-        // printf("%c",p);
         i++;
     }
 
+    printf("El patron tiene tam: %d \n ", tamPatron);
+    //imprimirPatron();
+    for (int k = 0; k < tamPatron; k++)
+    {
+        printf(" %c ", *(patron + k));
+    }
+
+    // printf("%c", *(patron+1));
+
+    // Colocamos el puntero al inicio del archivo del texto
+    int inicioTe = fseek(pf, 0, SEEK_SET);
+    //     //Obtenemos el texto
+
+    printf("\n El numero de palabras %d", numWord);
+
+    int j = 0;
+    LOOP:while ((t = getc(pf)) != EOF){
+    //     //Quita comas y puntos
+        if ((t == ',') || (t == '.'))
+        {
+            *(texto + j) = ' ';
+            goto LOOP;        
+        }
+        *(texto + j) = t; 
+        j++;
+    }
+    // printf("\n j = %d",j);
+
+
+    // Imprime el texto
+    printf("\n--------------TEXTO-----------------\n");
+    for (int itTexto = 0; itTexto < j; itTexto++){
+         printf("%c ", *(texto + itTexto));
+    }
     
-    imprimirPatron();
+
     //Liberando memoria
     free(texto);
     free(patron);
+
     //Cerrando archivos
     fclose(pf);
     fclose(pfp);

@@ -1,4 +1,5 @@
-/*    Busqueda Paralela en C
+/*    Busqueda Paralela en C y Búsqueda Binaria 
+
 * Asignación dinamica de memoria.
 * Ejecución ./a.out <# de hilos> <Numero a buscar>
 * El número de hilos determina el tamaño del arreglo a generar de forma pseudo-aleatoria. 
@@ -21,6 +22,15 @@ void imprimir(){
 	printf("\n");
 }
 
+/* Quick sort
+*Dada la precondición de BBinaria se ordena con la siguiente funcion
+* 
+*/
+void ordenar(){
+printf("Ordenando el arreglo");        
+
+
+}
 /* Metodo que rellena un arreglo 
 con elementos pseudo-aleatorio
 en el intervalo [0,99]
@@ -33,9 +43,14 @@ void Rellenar(){
 }
 
 void BBinariaParallel(int elemBuscado){
-
-	omp_set_num_threads(n);
+    //Para medir el tiempo de ejecución 
+    double start;
+    double end;
 	printf(">>Busqueda Paralela \n Número de hilos es: %i y buscamos %i \n",n,elemBuscado);
+
+    //Inicia conteo de tiempo
+    start = omp_get_wtime();
+	omp_set_num_threads(n);
 
 	int idHilo;
 	int bandera = 0;
@@ -52,6 +67,9 @@ void BBinariaParallel(int elemBuscado){
 	if(bandera==0){
 		printf("@@El elemento no fue encontrado, BB\n");
 	}
+
+    end = omp_get_wtime();
+    printf("Tiempo BParalela %f \n", end-start);
 }
 
 int main(int argc, char** argv){

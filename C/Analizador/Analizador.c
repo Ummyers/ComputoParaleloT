@@ -35,7 +35,7 @@ int main(int argc, char const *argv[])
 	int op = 1;
 	char palabraAgrega[20];
 	puts("¿Qué palabra quieres agregar?");
-	int index = 0;
+	int indice = 0;
 	do{
 		puts("Proporcina la palabra");
 		// gets(palabraAgrega);
@@ -45,11 +45,11 @@ int main(int argc, char const *argv[])
 		//texto[index] = newPal;
 		int i = 0;
 		while(palabraAgrega[i] != '\0'){
-			texto[index].pal[i] = palabraAgrega[i];
+			texto[indice].pal[i] = palabraAgrega[i];
 			i++; 
 		}
-		texto[index].veces = 1;
-		index++;
+		texto[indice].veces = 1;
+		indice++;
 		puts("¿Quieres seguir agregando palabras?");
 		scanf("%d", &op);
 	}while(op == 1);
