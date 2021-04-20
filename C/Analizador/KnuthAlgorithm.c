@@ -75,7 +75,42 @@ void extraerPatron(){
     }
 }
 
+void auxiliarKnuth()
+{
+    int tablaKnuth[tamPatron];
+    printf("\nTabla Auxiliar del algoritmo Knuth\n");
 
+    //Se inicializa el arreglo con valores de -1
+    for (int i = 0; i < tamPatron; i++)
+    {
+        tablaKnuth[i] = 0;
+    }
+
+    char simboloActual;
+    char simboloSiguiente;
+    for (int i = 0; i < tamPatron; i++)
+    {
+        simboloActual = *(patron + i);
+        if (tablaKnuth[i] == 0)
+        {
+            // printf("Entra a posición %d a poner -1",i);
+            tablaKnuth[i] == -1;
+            for (int j = i + 1; j < tamPatron; j++)
+            {
+                simboloSiguiente = *(patron + j);
+                if (simboloActual == simboloSiguiente)
+                {
+                    tablaKnuth[j] = i + 1;
+                }
+            }
+        }
+    }
+    for (int i = 0; i < tamPatron; i++)
+    {
+        // tablaKnuth[i] = -1;
+        printf("tablaKunth[%d] = %d\n", i, tablaKnuth[i]);
+    }
+}
 
 int main(int argc, char const *argv[])
 {
@@ -93,7 +128,7 @@ int main(int argc, char const *argv[])
     preText();
 
     texto = (char*)malloc(numSimbolos* sizeof(char));
-    patron = (char*)malloc(tamPatron* sizeof(char));
+    patron = (char*)malloc(tamPatron * sizeof(char));
 
     // Colocamos el puntero al inicio del archivo
     int inicio = fseek(pfp,0,SEEK_SET);
@@ -136,13 +171,48 @@ int main(int argc, char const *argv[])
     // printf("\n j = %d",j);
 
 
-    // Imprime el texto
-    printf("\n--------------TEXTO-----------------\n");
-    for (int itTexto = 0; itTexto < j; itTexto++){
-         printf("%c ", *(texto + itTexto));
-    }
-    
+    // // Imprime el texto
+    // printf("\n--------------TEXTO-----------------\n");
+    // for (int itTexto = 0; itTexto < j; itTexto++){
+    //      printf("%c ", *(texto + itTexto));
+    // }
 
+    //auxiliarKnuth();
+    int tablaKnuth[tamPatron];
+    printf("\nTabla Auxiliar del algoritmo Knuth\n");
+
+    //Se inicializa el arreglo con valores de -1
+    for (int i = 0; i < tamPatron; i++)
+    {
+        tablaKnuth[i] = 0;
+    }
+
+    char simboloActual;
+    char simboloSiguiente;
+    for (int i = 0; i < tamPatron; i++)
+    {
+        simboloActual = *(patron + i);
+        if (tablaKnuth[i] == 0)
+        {
+            // printf("Entra a posición %d a poner -1",i);
+            tablaKnuth[i] == -1;
+            for (int j = i + 1; j < tamPatron; j++)
+            {
+                simboloSiguiente = *(patron + j);
+                if (simboloActual == simboloSiguiente)
+                {
+                    tablaKnuth[j] = i + 1;
+                }
+            }
+        }
+    }
+    for (int i = 0; i < tamPatron; i++)
+    {
+        // tablaKnuth[i] = -1;
+        printf("tablaKunth[%d] = %d\n", i, tablaKnuth[i]);
+    }
+
+    // auxiliarKnuth();
     //Liberando memoria
     free(texto);
     free(patron);
