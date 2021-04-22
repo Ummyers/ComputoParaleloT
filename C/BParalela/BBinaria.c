@@ -1,4 +1,4 @@
-/*Busqueda "Binaria" en C*/
+/*Busqueda "Binaria" en C, por anexar*/
 
 #include <stdio.h>
 #include <stdlib.h>

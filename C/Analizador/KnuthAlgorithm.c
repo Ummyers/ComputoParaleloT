@@ -6,7 +6,6 @@
 #include <stdlib.h>
 
 int indice = 0;
-
 //Tentativo numero de palabras del texto
 int numWord = 0;
 //Número de símbolos que tiene el patrón
@@ -27,7 +26,6 @@ FILE *pfp; //Puntero para el patron
 /* @brief imprime el patron a buscar
 */
 void imprimirPatron(){
-
     printf("El patron tiene tam: %d \n",tamPatron);
 
     for (int k = 0; k < tamPatron; k++){
@@ -169,7 +167,6 @@ int main(int argc, char const *argv[])
         j++;
     }
     // printf("\n j = %d",j);
-
 
     // // Imprime el texto
     // printf("\n--------------TEXTO-----------------\n");
