@@ -2,8 +2,11 @@
 * Abril, 2021
 * Muñiz Patiño, Andrea
 */
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
+
+void ImprimirTablaKunth(int tablaKnuth[]);
+void imprimirPatron();
 
 int indice = 0;
 //Tentativo numero de palabras del texto
@@ -13,26 +16,16 @@ int tamPatron = 0;
 //Número de símbolos que tiene el texto
 int numSimbolos = 0;
 char t; //para el texto
-char p; //para el patron
-    
-//Guardamos el texto
+char p; //para el patron 
+//Guardamos el texto 
 char *texto;
 //Guardamos el patron
 char *patron;
 
+
 FILE *pf; //Puntero para el texto
 FILE *pfp; //Puntero para el patron
 
-/* @brief imprime el patron a buscar
-*/
-void imprimirPatron(){
-    printf("El patron tiene tam: %d \n",tamPatron);
-
-    for (int k = 0; k < tamPatron; k++){
-        printf(" %c ", *(patron + k));
-    }
-    printf("\n");
-}
 
 /* @brief pre procesa el patron y el texto
 * 
@@ -55,7 +48,6 @@ void preText(){
             numSimbolos++;
     }
 
-    //Pre-procesa el patron
     while ((p = getc(pfp)) != EOF)
     {
         tamPatron++;
@@ -135,7 +127,7 @@ int main(int argc, char const *argv[])
     // extraerPatron();
     int i = 0;
     while ((p = getc(pfp)) != EOF)
-    {
+    {       
         *(patron + i) = p;
         i++;
     }
@@ -166,15 +158,10 @@ int main(int argc, char const *argv[])
         *(texto + j) = t; 
         j++;
     }
-    // printf("\n j = %d",j);
-
-    // // Imprime el texto
-    // printf("\n--------------TEXTO-----------------\n");
-    // for (int itTexto = 0; itTexto < j; itTexto++){
-    //      printf("%c ", *(texto + itTexto));
-    // }
-
+    
     //auxiliarKnuth();
+
+    //Tabla auxiliar para el algoritmo Knuth
     int tablaKnuth[tamPatron];
     printf("\nTabla Auxiliar del algoritmo Knuth\n");
 
@@ -203,13 +190,9 @@ int main(int argc, char const *argv[])
             }
         }
     }
-    for (int i = 0; i < tamPatron; i++)
-    {
-        // tablaKnuth[i] = -1;
-        printf("tablaKunth[%d] = %d\n", i, tablaKnuth[i]);
-    }
 
-    // auxiliarKnuth();
+    ImprimirTablaKnuth(tablaKnuth);
+
     //Liberando memoria
     free(texto);
     free(patron);
@@ -219,4 +202,25 @@ int main(int argc, char const *argv[])
     fclose(pfp);
 
     return 0;
+}
+
+void ImprimirTablaKnuth(int tablaKnuth []){ 
+    for (int i = 0; i < tamPatron; i++)
+    {
+        // tablaKnuth[i] = -1;
+        printf("tablaKunth[%d] = %d\n", i, tablaKnuth[i]);
+    }
+}
+
+/* @brief imprime el patron a buscar
+*/
+void imprimirPatron()
+{
+    printf("El patron tiene tam: %d \n", tamPatron);
+
+    for (int k = 0; k < tamPatron; k++)
+    {
+        printf(" %c ", *(patron + k));
+    }
+    printf("\n");
 }
