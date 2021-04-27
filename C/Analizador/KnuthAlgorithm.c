@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void ImprimirTablaKunth(int tablaKnuth[]);
+void imprimirTablaKnuth(int tablaKnuth[]);
 void imprimirPatron();
 
 int indice = 0;
@@ -166,15 +166,13 @@ int main(int argc, char const *argv[])
     printf("\nTabla Auxiliar del algoritmo Knuth\n");
 
     //Se inicializa el arreglo con valores de -1
-    for (int i = 0; i < tamPatron; i++)
-    {
+    for (int i = 0; i < tamPatron; i++){
         tablaKnuth[i] = 0;
     }
 
     char simboloActual;
     char simboloSiguiente;
-    for (int i = 0; i < tamPatron; i++)
-    {
+    for (int i = 0; i < tamPatron; i++){
         simboloActual = *(patron + i);
         if (tablaKnuth[i] == 0)
         {
@@ -191,7 +189,8 @@ int main(int argc, char const *argv[])
         }
     }
 
-    ImprimirTablaKnuth(tablaKnuth);
+    // printf("--Llamando a ImprimirTablaKnuth--\n");
+    // imprimirTablaKnuth(tablaKnuth);
 
     //Liberando memoria
     free(texto);
@@ -204,7 +203,8 @@ int main(int argc, char const *argv[])
     return 0;
 }
 
-void ImprimirTablaKnuth(int tablaKnuth []){ 
+void imprimirTablaKnuth(int tablaKnuth[])
+{
     for (int i = 0; i < tamPatron; i++)
     {
         // tablaKnuth[i] = -1;
