@@ -1,5 +1,5 @@
 /* Algoritmo de Knuth. 
-* Abril, 2021
+* Abril, 2021, Mayo
 * Muñiz Patiño, Andrea
 */
 #include <stdlib.h>
@@ -7,9 +7,11 @@
 
 void imprimirTablaKnuth(int tablaKnuth[]);
 void imprimirPatron();
+void tablaKnuth2(int tableKnuth[]);
 
 int indice = 0;
-//Tentativo numero de palabras del texto
+
+//Numero de palabras del texto
 int numWord = 0;
 //Número de símbolos que tiene el patrón
 int tamPatron = 0; 
@@ -21,6 +23,10 @@ char p; //para el patron
 char *texto;
 //Guardamos el patron
 char *patron;
+
+//APuntadores para el algoritmo de Knuth
+char *patronTabla; 
+int *tablaK; 
 
 
 FILE *pf; //Puntero para el texto
@@ -65,42 +71,6 @@ void extraerPatron(){
     }
 }
 
-void auxiliarKnuth()
-{
-    int tablaKnuth[tamPatron];
-    printf("\nTabla Auxiliar del algoritmo Knuth\n");
-
-    //Se inicializa el arreglo con valores de -1
-    for (int i = 0; i < tamPatron; i++)
-    {
-        tablaKnuth[i] = 0;
-    }
-
-    char simboloActual;
-    char simboloSiguiente;
-    for (int i = 0; i < tamPatron; i++)
-    {
-        simboloActual = *(patron + i);
-        if (tablaKnuth[i] == 0)
-        {
-            // printf("Entra a posición %d a poner -1",i);
-            tablaKnuth[i] == -1;
-            for (int j = i + 1; j < tamPatron; j++)
-            {
-                simboloSiguiente = *(patron + j);
-                if (simboloActual == simboloSiguiente)
-                {
-                    tablaKnuth[j] = i + 1;
-                }
-            }
-        }
-    }
-    for (int i = 0; i < tamPatron; i++)
-    {
-        // tablaKnuth[i] = -1;
-        printf("tablaKunth[%d] = %d\n", i, tablaKnuth[i]);
-    }
-}
 
 int main(int argc, char const *argv[])
 {
@@ -124,27 +94,31 @@ int main(int argc, char const *argv[])
     int inicio = fseek(pfp,0,SEEK_SET);
     //el puntero pfp se mueve cero posiciones desde el incio.
 
-    // extraerPatron();
+
+    // -------------extraerPatron------------
     int i = 0;
     while ((p = getc(pfp)) != EOF)
     {       
         *(patron + i) = p;
         i++;
     }
+    // -------------extraerPatron------------
 
     printf("El patron tiene tam: %d \n ", tamPatron);
-    //imprimirPatron();
+
+    //---------------imprimirPatron------------
     for (int k = 0; k < tamPatron; k++)
     {
         printf(" %c ", *(patron + k));
     }
+    //---------------imprimirPatron------------
 
-    // printf("%c", *(patron+1));
 
     // Colocamos el puntero al inicio del archivo del texto
     int inicioTe = fseek(pf, 0, SEEK_SET);
-    //     //Obtenemos el texto
-
+    
+    
+    //------------Obtenemos el texto----------
     printf("\n El numero de palabras %d", numWord);
 
     int j = 0;
@@ -158,8 +132,11 @@ int main(int argc, char const *argv[])
         *(texto + j) = t; 
         j++;
     }
-    
-    //auxiliarKnuth();
+    //------------Obtenemos el texto----------
+
+
+
+    //-----------------auxiliarKnuth-------------------
 
     //Tabla auxiliar para el algoritmo Knuth
     int tablaKnuth[tamPatron];
@@ -189,8 +166,59 @@ int main(int argc, char const *argv[])
         }
     }
 
+    //-----------------auxiliarKnuth-------------------
+
+
     // printf("--Llamando a ImprimirTablaKnuth--\n");
-    // imprimirTablaKnuth(tablaKnuth);
+    imprimirTablaKnuth(tablaKnuth);
+
+    //-----------------Tabla de Knuth---------------------
+    // tablaKnuth2(tablaKnuth);
+
+    //Tiene el patron iniciado en la posición 1
+    patronTabla = (char *)malloc((tamPatron + 1) * sizeof(char));
+    //Indica cuantas posiciones se movera el apuntador j_Indu
+    tablaK = (int *)malloc((tamPatron + 1) * sizeof(int));
+
+    *(patronTabla + 0) = ' ';
+    *(tablaK + 0) = 0;
+
+    for (int iTK = 1; iTK < tamPatron + 1; iTK++)
+    {
+        //Caracteres en posiciones correctas? (Segun la facilidad del algoritmo de Knuth)
+        *(patronTabla + iTK) = *(patron + iTK - 1);
+        //Valores de la tabla de Knuth
+        *(tablaK + iTK) = tablaKnuth[iTK - 1];
+    }
+
+    for (int k = 0; k < tamPatron+1; k++)
+    {
+        printf(" %c ", *(patronTabla + k));
+    }
+    printf("\n");
+
+    for (int k = 0; k < tamPatron+1; k++)
+    {
+        printf(" %d ", *(tablaK + k));
+    }
+    printf("\n");
+
+    //-------------------Tabla de Knuth------------------
+
+
+
+    //----------Implementación del algoritmo de Knuth-----------------
+
+    /* La variable i itera en el texto
+    *   La variable j itera en el patron
+    */
+
+    int i_Indu = 0;
+    int j_Indu = -1;
+
+
+
+    // printf("El apuntador esta en: %c", *(texto +0));
 
     //Liberando memoria
     free(texto);
@@ -211,6 +239,39 @@ void imprimirTablaKnuth(int tablaKnuth[])
         printf("tablaKunth[%d] = %d\n", i, tablaKnuth[i]);
     }
 }
+
+// Función que re- coloca los valores para "que las cuentas sean fáciles"
+void tablaKnuth2(int tablaKnuth[]){
+
+    //Tiene el patron iniciado en la posición 1 
+    patronTabla = (char *)malloc((tamPatron + 1) * sizeof(char));
+    //Indica cuantas posiciones se movera el apuntador j_Indu
+    tablaK = (int *)malloc((tamPatron + 1) * sizeof(int));
+
+    *(patronTabla + 0) = ' ';
+    *(tablaK + 0) = 0;
+
+    for (int iTK = 1; iTK < tamPatron + 1; iTK++)
+    {
+        //Caracteres en posiciones correctas? (Segun la facilidad del algoritmo de Knuth)
+        *(patronTabla + iTK) = *(patron + iTK - 1 );
+        //Valores de la tabla de Knuth 
+        *(tablaK + iTK) =  tablaKnuth[iTK-1];
+    }
+
+    for (int k = 0; k < tamPatron; k++)
+    {
+        printf(" %c ", *(patronTabla + k));
+    }
+    printf("\n");
+
+    for (int k = 0; k < tamPatron; k++)
+    {
+        printf(" %c ", *(tablaK + k));
+    }
+    printf("\n");
+}
+
 
 /* @brief imprime el patron a buscar
 */
