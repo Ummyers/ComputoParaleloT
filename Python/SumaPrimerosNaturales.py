@@ -2,7 +2,6 @@ from viztracer import VizTracer
 import threading
 import time
 
-
 sumaTotal = 0
 
 ## output_file = <Nombre del archivo de salida.html>
@@ -36,22 +35,3 @@ with VizTracer(output_file="grafica.html") as tracer:
 	hilo2.start()
 	hilo3.start()
 	print('La suma total es: ', sumaTotal)
-
-
-idHilo = 1
-tamIntervalo = 100
-numHilos = 2
-suma = 0
-
-for j in range(idHilo,tamIntervalo,numHilos):
-	suma+=j
-
-idHilo = 2  
-
-for k in range(idHilo,tamIntervalo,numHilos):
-    suma+=k
-
-
-print('<Fuera de hilos>La suma es: ', suma)
-print('<Fuera de hilos>La suma total es: ', sumaTotal)
-    
