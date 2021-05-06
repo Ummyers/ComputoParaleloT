@@ -5,9 +5,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+//Declarando funciones
 void imprimirTablaKnuth(int tablaKnuth[]);
 void imprimirPatron();
 void tablaKnuth2(int tableKnuth[]);
+void imprimirTexto();
 
 int indice = 0;
 
@@ -170,7 +172,7 @@ int main(int argc, char const *argv[])
 
 
     // printf("--Llamando a ImprimirTablaKnuth--\n");
-    imprimirTablaKnuth(tablaKnuth);
+    // imprimirTablaKnuth(tablaKnuth);
 
     //-----------------Tabla de Knuth---------------------
     // tablaKnuth2(tablaKnuth);
@@ -209,26 +211,71 @@ int main(int argc, char const *argv[])
 
     //----------Implementación del algoritmo de Knuth-----------------
 
+    //imprimirTexto();
     /* La variable i itera en el texto
     *   La variable j itera en el patron
+    * Se inician los valores en cero dado el algoritmo 
     */
 
     int i_Indu = 0;
-    int j_Indu = -1;
+    int j_Indu = 0;
 
+    /* Mientras no se termine el texto o se encuentre una coincidencia
+    *   seguirá buscando el patron
+    *
+    */
 
+   printf("\n----Inicia Algoritmo de Knuth----\n");
+    char ch_Texto, ch_patron;
 
-    // printf("El apuntador esta en: %c", *(texto +0));
+   while(i_Indu < numSimbolos){
+       if(j_Indu == tamPatron){
+           printf("El patrón se encuentra en el intervalo [%d,%d] del texto \n",i_Indu-tamPatron,i_Indu);
+           break;
+       }else{
+           ch_patron = *(patronTabla + j_Indu + 1);
+           ch_Texto = *(texto + i_Indu);
+        //    printf("Se compara <%c> del texto con <%c> del patron \n",ch_Texto, ch_patron);
 
-    //Liberando memoria
-    free(texto);
-    free(patron);
+           if(ch_patron == ch_Texto){
+            //    printf("@@Se incremento i_Indu y j_Indu\n");
+               j_Indu++;
+           }else{
+               j_Indu = *(tablaK + j_Indu);
+           }
+           i_Indu++;
+       }
+   }
 
-    //Cerrando archivos
-    fclose(pf);
-    fclose(pfp);
+   printf("Valor de i_Indu %d \n",i_Indu);
+   printf("Valor de j_Indu %d \n", j_Indu);
 
-    return 0;
+   //----------Implementación del algoritmo de Knuth-----------------
+
+  
+   //Liberando memoria
+   free(texto);
+   free(patron);
+
+   //Cerrando archivos
+   fclose(pf);
+   fclose(pfp);
+
+   return 0;
+}
+
+void imprimirTexto()
+{
+    printf("----Imprimiendo Texto----\n");
+
+    for (int k = 0; k < numSimbolos + 1; k++)
+    {
+        printf("%c", *(texto + k));
+    }
+    printf("\n----Imprimiendo Texto----");
+
+    printf("\n");
+
 }
 
 void imprimirTablaKnuth(int tablaKnuth[])
