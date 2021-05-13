@@ -20,6 +20,7 @@ with VizTracer(output_file="graph.html") as tracer:
 	w = threading.Thread(name='worker', target=worker)
 	w2 = threading.Thread(target=worker)  # use default name
 
+	w.run()
 	w.start()
 	w2.start()
 	t.start()
